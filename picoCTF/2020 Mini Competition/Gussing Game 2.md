@@ -6,13 +6,18 @@ https://frc6.com/index.php/archives/49/
 https://play.picoctf.org/events/3/challenges/challenge/89
 ## Description
 It's the Return of your favorite game!
+
 [Gussing Game 2.zip][1]
+
 `nc jupiter.challenges.picoctf.org 13610`
 
 # Tools
 IDA
+
 IDA remote linux debugger
+
 vmware - kali linux
+
 libc database search        https://libc.blukat.me
 
 # Analysis
@@ -34,16 +39,23 @@ I found there is a vuln to do the buffer overflow attack and a format string vul
 ## find number of guess
 ### local
 Use IDA debugger to debug it and find the random number:
+
 set a breakpoint at .text:080486A3
+
 ![ida_rand.png][3]
+
 I found the value of `eax` is FFFFF9A1, which is equal to -1631
 
     0xFFFFF9A1 xor 0xFFFFFFFF + 1 = 0x65E + 1 = 0x65F = 1631
 
 ![local_rand.png][4]
+
 ### remote
+
 Unfortunately, this is not the correct number in the remote server
+
 ![remote_num_nope.png][5]
+
 I found the number could only in the range (-4094,4096) b/c the following code
 
     long ans = (get_random() % 4096) + 1;
@@ -67,17 +79,25 @@ Now, I know the random number in the remote server is -31
 
 ## leck canary
 I found there is a canary, so I tried to leck it by taking advantage of format string vuln.
+
 ![canary_ida.png][7]
+
 Set a breakpoint at .text:080487D3
+
 ![bp_find_canary.png][8]
+
 ebp+canary = FFC8BC7C
+
 ![canary.png][9]
+
 esp = FFC8BA60
+
 the canary can be treated as the 135th parameter (not include the format) of printf
 
     (0xFFC8BC7C - 0xFFC8BA60)/4 = 0x87 = 135
 
 So, the canary can be 'leck'ed by input %135$p when it asking the winner's name.
+
 ![leck_canary.png][10]
 
 #### python function to leck data in the stack
@@ -118,12 +138,15 @@ The remote server has a different libc version with local, so we have to found t
 Try to leck some address of function from GOT (_GLOBAL_OFFSET_TABLE_)
 
 Still break at .text:080487D3
+
 ![stack_got.png][11]
+
 esp = FFC8BA60
 
     (0xFFC8BC4C - 0xFFC8BA60)/4 = 0x7B = 123
 
 So, the address of GOT can be 'leck'ed by input %123$p when it asking the winner's name.
+
 ![got.png][12]
 
 Also can be gained by call `leck_by_para_num(123)`
@@ -133,10 +156,15 @@ Also can be gained by call `leck_by_para_num(123)`
 
 ## find address of functions in GOT
 View the GOT disassembly view
+
 ![got_ida.png][13]
+
 I choose `gets` and `__libc_start_main` symbols.
+
 `gets` is at the 0x10 offset of GOT (`GOT + 0x10`)
+
 `__libc_start_main` is at the 0x24 offset of GOT (`GOT + 0x24`)
+
 So we have to leck the data by input address. We can take advantage format string vuln again by input something include `%s`.
 
 #### python function to leck data by input address
