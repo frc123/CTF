@@ -1,5 +1,6 @@
 # Blog
-frc6.com
+https://frc6.com
+
 Welcome to link!
 
 # Also
