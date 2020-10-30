@@ -342,7 +342,9 @@ So, the complete char of key is "68c91cd2ff85e90efbe041faf4b572413470a5eb5f47ff9
 ## Find Final Flag
 
 The key of otp is "68c91cd2ff85e90efbe041faf4b572413470a5eb5f47ff9f13dec686b091e46829c55eff9d23ccdb53c0ea76b277b74ea836"
+
 The contents in flag.txt is "18a07fbdbcd1af759895328ec4d82d2b411dc7876c34a0ab61eda8f2efa5bb0f198a3aa0ac47ff9a0cf3d913d3138678ce4b"
+
 After xor them, the result is "7069636f4354467b63757374306d5f6a756d626c33735f3472336e745f345f67304f645f316433415f33336561643136667d"
 
 Convert the xor result ("7069636f4354467b63757374306d5f6a756d626c33735f3472336e745f345f67304f645f316433415f33336561643136667d") from hex to ascii, it will be "picoCTF{cust0m_jumbl3s_4r3nt_4_g0Od_1d3A_33ead16f}", which is the final flag.
