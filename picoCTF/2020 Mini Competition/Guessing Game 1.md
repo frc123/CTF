@@ -11,15 +11,21 @@ I made a simple game to show off my programming skills. See if you can beat it!
 
 # Tools
 IDA
+
 VM - Kali Linux
+
 Python
+
 ROPgadget
 
 # Analysis
 ## Knowledge points
 Binary Exploitation
+
 Return-oriented programming (ROP)
+
 The goal of the Challenge Question is to run `execve("/bin/sh",NULL,NULL)` on the remote server.
+
 Tips: No shellcode b/c NX is enabled: you cannot execute stack
 
 ## vuln
@@ -55,7 +61,9 @@ Do ROP to achieve the goal—`execve("/bin/sh",NULL,NULL)`—by using the follow
 Input the Gussing Number "84" for the first time (you only need one time if you guess correct so you can access to win() function)
 
 Q: Why "84"
+
 A: Dynamic debugging (IDA debugger or GDB)
+
 Set a breakpoint at the following position:
 
     .text:0000000000400BBC                 mov     [rbp+var_ans], rax
