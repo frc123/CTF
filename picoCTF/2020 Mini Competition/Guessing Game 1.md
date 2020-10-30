@@ -1,5 +1,5 @@
 # Blog
-https://frc6.com/index.php/tag/picoctf_2020mini/
+https://frc6.com/index.php/archives/45/
 
 # Question
 ### Source
