@@ -1,3 +1,6 @@
+# Blog
+https://frc6.com/index.php/archives/45/
+
 # Question
 ### Source
 https://play.picoctf.org/events/3/challenges/challenge/90
